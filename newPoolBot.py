@@ -106,4 +106,4 @@ async def load_initial(interaction: discord.Interaction):
         await interaction.response.send_message("initial_rankings.csv not found. Please create the file.")
 
 # Run the bot
-bot.run("MTM1MjI4MzQ2MDA4NTIyMzUzNA.GjRF31.4-4u8W1B2IE3dNVEkZUYezzLvsTLoT-WD3G1hY")
+bot.run("REDACTED")
