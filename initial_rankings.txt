@@ -1,0 +1,11 @@
+Name,Rating,Wins,Losses
+Isaac,1104.99733,10,2
+Ryan,1019.384259,4,3
+Holmesey,1010.345,5,3
+Prendi,1000,0,0
+Goodlad,1000,0,0
+Ruby,999.425239,2,4
+Paige,996.2335347,4,5
+Martin,987.0269196,4,6
+Ben,960.5089332,0,2
+Chris,943.4717007,0,4
