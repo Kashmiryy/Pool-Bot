@@ -47,13 +47,7 @@ def update_ratings(player_a, player_b, winner):
     players.to_csv("player_rankings.csv", index=False)
     return f"Ratings updated! {player_a}: {new_rating_a}, {player_b}: {new_rating_b}"
 
-# Function to write rankings to a text file
-def write_rankings_to_file():
-    sorted_players = players.sort_values(by="Rating", ascending=False)
-    with open("rankings.txt", "w") as file:
-        file.write("Current Rankings:\n")
-        for index, row in sorted_players.iterrows():
-            file.write(f"{row['Name']}: Rating = {row['Rating']}, Wins = {row['Wins']}, Losses = {row['Losses']}\n")
+
 
 # Discord bot setup
 intents = discord.Intents.default()
@@ -99,11 +93,6 @@ async def show_rankings(interaction: discord.Interaction):
         rankings += f"{row['Name']}: Rating = {row['Rating']}, Wins = {row['Wins']}, Losses = {row['Losses']}\n"
     await interaction.response.send_message(rankings)
 
-# Slash command to write rankings to a file
-@bot.tree.command(name="writerankings", description="Write the current rankings to a file.")
-async def write_rankings(interaction: discord.Interaction):
-    write_rankings_to_file()
-    await interaction.response.send_message("Rankings have been written to rankings.txt.")
 
 # Slash command to load initial rankings
 @bot.tree.command(name="loadinitial", description="Load initial rankings from a CSV file.")
