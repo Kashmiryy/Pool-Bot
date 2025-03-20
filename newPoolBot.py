@@ -5,8 +5,8 @@ import pandas as pd
 import os
 
 # Load or create player data
-if os.path.exists("test_rankings.csv"):
-    players = pd.read_csv("test_rankings.csv")
+if os.path.exists("all_rankings.csv"):
+    players = pd.read_csv("all_rankings.csv")
 else:
     players = pd.DataFrame(columns=["Name", "Rating", "Wins", "Losses"])
 
