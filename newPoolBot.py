@@ -5,8 +5,8 @@ import pandas as pd
 import os
 
 # Load or create player data
-if os.path.exists("game_rankings.csv"):
-    players = pd.read_csv("game_rankings.csv")
+if os.path.exists("player_rankings.csv"):
+    players = pd.read_csv("player_rankings.csv")
 else:
     players = pd.DataFrame(columns=["Name", "Rating", "Wins", "Losses"])
 
@@ -46,6 +46,14 @@ def update_ratings(player_a, player_b, winner):
     # Save updated data to CSV
     players.to_csv("player_rankings.csv", index=False)
     return f"Ratings updated! {player_a}: {new_rating_a}, {player_b}: {new_rating_b}"
+
+# Function to write rankings to a text file
+def write_rankings_to_file():
+    sorted_players = players.sort_values(by="Rating", ascending=False)
+    with open("rankings.txt", "w") as file:
+        file.write("Current Rankings:\n")
+        for index, row in sorted_players.iterrows():
+            file.write(f"{row['Name']}: Rating = {row['Rating']}, Wins = {row['Wins']}, Losses = {row['Losses']}\n")
 
 # Discord bot setup
 intents = discord.Intents.default()
@@ -90,6 +98,23 @@ async def show_rankings(interaction: discord.Interaction):
     for index, row in sorted_players.iterrows():
         rankings += f"{row['Name']}: Rating = {row['Rating']}, Wins = {row['Wins']}, Losses = {row['Losses']}\n"
     await interaction.response.send_message(rankings)
+
+# Slash command to write rankings to a file
+@bot.tree.command(name="writerankings", description="Write the current rankings to a file.")
+async def write_rankings(interaction: discord.Interaction):
+    write_rankings_to_file()
+    await interaction.response.send_message("Rankings have been written to rankings.txt.")
+
+# Slash command to load initial rankings
+@bot.tree.command(name="loadinitial", description="Load initial rankings from a CSV file.")
+async def load_initial(interaction: discord.Interaction):
+    global players
+    if os.path.exists("initial_rankings.csv"):
+        players = pd.read_csv("initial_rankings.csv")
+        players.to_csv("player_rankings.csv", index=False)
+        await interaction.response.send_message("Initial rankings loaded successfully!")
+    else:
+        await interaction.response.send_message("initial_rankings.csv not found. Please create the file.")
 
 # Run the bot
 bot.run("MTM1MjI4MzQ2MDA4NTIyMzUzNA.GjRF31.4-4u8W1B2IE3dNVEkZUYezzLvsTLoT-WD3G1hY")
